@@ -6,25 +6,45 @@ require("dotenv").config();
 exports.register = (req, res) => {
   const { username, email, password } = req.body;
   bcrypt.hash(password, 10, (err, hash) => {
-    if (err) throw err;
+    if (err) {
+      console.error("Error hashing password:", err);
+      return res.status(500).send(err);
+    }
     const userData = { username, email, password: hash };
+    console.log("Registering user:", userData);
     User.create(userData, (err, result) => {
-      if (err) return res.status(500).send(err);
+      if (err) {
+        console.error("Error registering user:", err);
+        return res.status(500).send(err);
+      }
       res.status(201).send("User registered successfully");
     });
   });
 };
 
 exports.login = (req, res) => {
-  const { email, password } = req.body;
-  User.findByEmail(email, (err, users) => {
-    if (err) return res.status(500).send(err);
-    if (users.length === 0) return res.status(404).send("User not found");
+  const { username, password } = req.body;
+  console.log("Attempting to log in user:", username);
+  User.findByUsername(username, (err, user) => {
+    if (err) {
+      console.error("Error finding user:", err);
+      return res.status(500).send(err);
+    }
+    if (!user) {
+      console.log("User not found:", username);
+      return res.status(404).send("User not found");
+    }
 
-    const user = users[0];
+    console.log("User found:", user);
     bcrypt.compare(password, user.password, (err, isMatch) => {
-      if (err) throw err;
-      if (!isMatch) return res.status(401).send("Invalid credentials");
+      if (err) {
+        console.error("Error comparing passwords:", err);
+        return res.status(500).send(err);
+      }
+      if (!isMatch) {
+        console.log("Invalid credentials for user:", username);
+        return res.status(401).send("Invalid credentials");
+      }
 
       const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
         expiresIn: "1h",

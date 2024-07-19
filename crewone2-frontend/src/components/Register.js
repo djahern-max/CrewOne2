@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { register } from "../api/auth";
 
 const Register = () => {
@@ -6,23 +7,28 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+      setError("Passwords do not match");
       return;
     }
     try {
       await register({ username, email, password });
       alert("User registered successfully");
+      navigate("/login"); // Redirect to login page
     } catch (error) {
-      alert("Error registering user");
+      setError("Error registering user");
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
+      <h2>Register</h2>
+      {error && <p className="error">{error}</p>}
       <div>
         <label>Username</label>
         <input
@@ -60,6 +66,12 @@ const Register = () => {
         />
       </div>
       <button type="submit">Register</button>
+      <p className="message">
+        Already have an account?{" "}
+        <Link to="/login" className="link">
+          Login
+        </Link>
+      </p>
     </form>
   );
 };
