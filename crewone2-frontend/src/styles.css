@@ -41,10 +41,10 @@ body {
   text-align: center;
 }
 
+h1,
 h2 {
   color: #333;
   margin-bottom: 1rem;
-  border: none; /* Ensure no border */
 }
 
 form div {
