@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import "../../styles.css";
+import { jwtDecode } from "jwt-decode";
+import "../../styles.css"; // Assuming this is your styles file
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -20,9 +21,25 @@ const Login = () => {
           password,
         }
       );
-      console.log("User logged in:", response.data);
-      localStorage.setItem("token", response.data.token);
-      navigate("/dashboard");
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+
+      const decoded = jwtDecode(token);
+      const role = decoded.role;
+
+      switch (role) {
+        case "Office":
+          navigate("/office-dashboard");
+          break;
+        case "Super":
+          navigate("/super-dashboard");
+          break;
+        case "Driver":
+          navigate("/driver-dashboard");
+          break;
+        default:
+          navigate("/");
+      }
     } catch (error) {
       console.error("There was an error logging in!", error);
       setError("There was an error logging in!");
