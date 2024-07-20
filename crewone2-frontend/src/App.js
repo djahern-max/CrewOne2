@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Register from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
 import Home from "./components/Home";
-import "./styles.css";
+import "../src/styles.css"; // Assuming this is your styles file
 
 const App = () => {
   return (
