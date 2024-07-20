@@ -1,22 +1,25 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Register from "./components/Register";
-import Login from "./components/Login"; // Corrected the import statement
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Link,
+  useLocation,
+} from "react-router-dom";
+import Register from "./components/Auth/Register";
+import Login from "./components/Auth/Login";
 import Home from "./components/Home";
 import "./styles.css";
 
 const App = () => {
   return (
     <Router>
-      <div className="container">
-        <h1>CrewOne2</h1>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NoMatch />} />
-        </Routes>
-      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<NoMatch />} />
+      </Routes>
     </Router>
   );
 };

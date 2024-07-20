@@ -4,13 +4,13 @@ const User = require("../models/User");
 require("dotenv").config();
 
 exports.register = (req, res) => {
-  const { username, email, password } = req.body;
+  const { username, email, password, role } = req.body; // Include role in request body
   bcrypt.hash(password, 10, (err, hash) => {
     if (err) {
       console.error("Error hashing password:", err);
       return res.status(500).send(err);
     }
-    const userData = { username, email, password: hash };
+    const userData = { username, email, password: hash, role };
     console.log("Registering user:", userData);
     User.create(userData, (err, result) => {
       if (err) {
@@ -46,10 +46,12 @@ exports.login = (req, res) => {
         return res.status(401).send("Invalid credentials");
       }
 
-      const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
-        expiresIn: "1h",
-      });
-      res.json({ token });
+      const token = jwt.sign(
+        { id: user.id, role: user.role },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+      res.json({ token, role: user.role }); // Include role in response
     });
   });
 };

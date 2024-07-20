@@ -1,49 +1,55 @@
+/* Reset default styles */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+div,
+span,
+a,
+ul,
+li,
+form,
+input,
+select,
+button {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
-  margin: 0;
-  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
+  margin: 0;
 }
 
 .container {
   background-color: white;
   padding: 2rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  width: 300px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  width: 400px;
+  max-width: 100%;
   text-align: center;
 }
 
-h1,
 h2 {
   color: #333;
-}
-
-nav ul {
-  padding: 0;
-  list-style-type: none;
-}
-
-nav ul li {
-  display: inline;
-  margin: 0 10px;
-}
-
-nav ul li a {
-  text-decoration: none;
-  color: #333;
-}
-
-nav ul li a:hover {
-  text-decoration: underline;
+  margin-bottom: 1rem;
+  border: none; /* Ensure no border */
 }
 
 form div {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  text-align: left;
 }
 
 label {
@@ -54,19 +60,25 @@ label {
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+select {
   width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 button {
-  padding: 10px 20px;
+  padding: 12px 20px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  font-weight: bold;
 }
 
 button:hover {
@@ -75,10 +87,16 @@ button:hover {
 
 .message {
   margin: 15px 0;
+  color: #333;
 }
 
 a {
   text-decoration: none;
+  color: #007bff;
+}
+
+a:hover {
+  text-decoration: underline;
 }
 
 .link {

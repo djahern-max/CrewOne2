@@ -3,10 +3,10 @@ const db = require("../config/db");
 const User = {
   create: (data, callback) => {
     const query =
-      "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+      "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)";
     db.query(
       query,
-      [data.username, data.email, data.password],
+      [data.username, data.email, data.password, data.role],
       (err, result) => {
         if (err) {
           console.error("Error creating user:", err);
@@ -15,7 +15,6 @@ const User = {
       }
     );
   },
-
   findByUsername: (username, callback) => {
     const query = "SELECT * FROM users WHERE username = ?";
     db.query(query, [username], (err, results) => {
