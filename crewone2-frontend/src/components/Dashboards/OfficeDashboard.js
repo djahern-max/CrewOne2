@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Sidebar from "../layouts/Sidebar";
+import "../../styles.css";
 
 const OfficeDashboard = () => {
   const [file, setFile] = useState(null);
@@ -32,12 +34,15 @@ const OfficeDashboard = () => {
   };
 
   return (
-    <div>
-      <h1>Office Dashboard</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleFileChange} />
-        <button type="submit">Upload CSV</button>
-      </form>
+    <div className="container">
+      <Sidebar />
+      <div className="content">
+        <h1>Office Dashboard</h1>
+        <form onSubmit={handleSubmit}>
+          <input type="file" onChange={handleFileChange} />
+          <button type="submit">Upload CSV</button>
+        </form>
+      </div>
     </div>
   );
 };
