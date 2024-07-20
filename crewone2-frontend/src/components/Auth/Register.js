@@ -4,16 +4,33 @@ import { useNavigate } from "react-router-dom";
 import "../../styles.css";
 
 const Register = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState(""); // Added role state
-  const [error, setError] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    role: "",
+  });
 
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.password !== formData.confirmPassword) {
+      setMessage("Passwords do not match");
+      return;
+    }
+
+    const { username, email, password, role } = formData;
+
     try {
       const response = await axios.post(
         "http://localhost:3001/api/auth/register",
@@ -21,67 +38,78 @@ const Register = () => {
           username,
           email,
           password,
-          role, // Include role in the request
+          role,
         }
       );
-      console.log("User registered:", response.data);
+      setMessage("User registered successfully");
       navigate("/login");
     } catch (error) {
       console.error("There was an error registering!", error);
-      setError("There was an error registering!");
+      setMessage("There was an error registering!");
     }
   };
 
   return (
     <div className="container">
-      <h2>Register</h2>
-      {error && <p className="error">{error}</p>}
+      <h1>Register</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>Username:</label>
+          <label htmlFor="username">Username</label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
             required
           />
         </div>
         <div>
-          <label>Email:</label>
+          <label htmlFor="email">Email</label>
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             required
           />
         </div>
         <div>
-          <label>Password:</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             required
           />
         </div>
         <div>
-          <label>Role:</label>
+          <label htmlFor="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="role">Role</label>
           <select
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
+            name="role"
+            value={formData.role}
+            onChange={handleChange}
             required
           >
             <option value="">Select Role</option>
-            <option value="Driver">Driver</option>
-            <option value="Super">Super</option>
-            <option value="Office">Office</option>
+            <option value="office">Office</option>
+            <option value="driver">Driver</option>
+            <option value="super">Super</option>
           </select>
         </div>
         <button type="submit">Register</button>
       </form>
-      <p>
-        Already have an account? <a href="/login">Login</a>
-      </p>
+      {message && <p>{message}</p>}
     </div>
   );
 };
