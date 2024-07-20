@@ -1,44 +1,51 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import "../../styles.css";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
 
-  const handleSubmit = async (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/login",
-        { username, password }
-      );
-      alert(response.data);
-    } catch (error) {
-      console.error("There was an error!", error);
-    }
+    axios
+      .post("/api/auth/login", formData)
+      .then((response) => {
+        console.log(response.data);
+        // Handle successful login here, e.g., store token and redirect
+      })
+      .catch((error) => {
+        console.error("There was an error logging in!", error);
+      });
   };
 
   return (
     <div className="container">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Username:</label>
+        <div>
+          <label>Username</label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
             required
           />
         </div>
-        <div className="form-group">
-          <label>Password:</label>
+        <div>
+          <label>Password</label>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             required
           />
         </div>
@@ -46,9 +53,9 @@ const Login = () => {
       </form>
       <p className="message">
         Don't have an account?{" "}
-        <Link to="/register" className="link">
+        <a href="/register" className="link">
           Register
-        </Link>
+        </a>
       </p>
     </div>
   );

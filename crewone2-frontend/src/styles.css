@@ -1,43 +1,22 @@
-/* Reset default styles */
-body,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-div,
-span,
-a,
-ul,
-li,
-form,
-input,
-select,
-button {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
 }
 
 .container {
-  background-color: white;
+  background-color: #fff;
   padding: 2rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  width: 400px;
-  max-width: 100%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 400px;
   text-align: center;
 }
 
@@ -47,15 +26,31 @@ h2 {
   margin-bottom: 1rem;
 }
 
-form div {
-  margin-bottom: 20px;
-  text-align: left;
+p {
+  color: #666;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Form Styles */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 label {
   display: block;
+  text-align: left;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
 }
 
 input[type="text"],
@@ -63,22 +58,19 @@ input[type="email"],
 input[type="password"],
 select {
   width: 100%;
-  padding: 10px;
+  padding: 0.75rem;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
 
 button {
-  padding: 12px 20px;
+  padding: 0.75rem;
   background-color: #007bff;
-  color: white;
+  color: #fff;
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
-  width: 100%;
-  font-size: 16px;
-  font-weight: bold;
 }
 
 button:hover {
@@ -86,24 +78,6 @@ button:hover {
 }
 
 .message {
-  margin: 15px 0;
-  color: #333;
-}
-
-a {
-  text-decoration: none;
-  color: #007bff;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-.link {
-  color: #007bff;
-  text-decoration: none;
-}
-
-.link:hover {
-  text-decoration: underline;
+  margin-top: 1rem;
+  color: #666;
 }

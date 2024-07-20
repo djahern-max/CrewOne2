@@ -1,61 +1,69 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
 import "../../styles.css";
 
 const Register = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("Driver"); // Default to 'Driver'
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    role: "Driver",
+  });
 
-  const handleSubmit = async (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/register",
-        { username, email, password, role }
-      );
-      alert(response.data);
-    } catch (error) {
-      console.error("There was an error!", error);
-    }
+    axios
+      .post("/api/auth/register", formData)
+      .then((response) => {
+        console.log(response.data);
+        window.location.href = "/login";
+      })
+      .catch((error) => {
+        console.error("There was an error registering!", error);
+      });
   };
 
   return (
     <div className="container">
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label>Username:</label>
+        <div>
+          <label>Username</label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
             required
           />
         </div>
-        <div className="form-group">
-          <label>Email:</label>
+        <div>
+          <label>Email</label>
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
             required
           />
         </div>
-        <div className="form-group">
-          <label>Password:</label>
+        <div>
+          <label>Password</label>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             required
           />
         </div>
-        <div className="form-group">
-          <label>Role:</label>
-          <select value={role} onChange={(e) => setRole(e.target.value)}>
+        <div>
+          <label>Role</label>
+          <select name="role" value={formData.role} onChange={handleChange}>
             <option value="Driver">Driver</option>
             <option value="Super">Super</option>
             <option value="Office">Office</option>
@@ -65,9 +73,9 @@ const Register = () => {
       </form>
       <p className="message">
         Already have an account?{" "}
-        <Link to="/login" className="link">
+        <a href="/login" className="link">
           Login
-        </Link>
+        </a>
       </p>
     </div>
   );
