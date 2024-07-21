@@ -7,7 +7,7 @@ exports.register = (req, res) => {
   const { username, email, password, role } = req.body;
   bcrypt.hash(password, 10, (err, hash) => {
     if (err) throw err;
-    const userData = { username, email, password: hash, role }; // Include role
+    const userData = { username, email, password: hash, role };
     User.create(userData, (err, result) => {
       if (err) return res.status(500).send(err);
       res.status(201).send("User registered successfully");
@@ -16,7 +16,7 @@ exports.register = (req, res) => {
 };
 
 exports.login = (req, res) => {
-  const { username, password } = req.body; // Changed from email to username
+  const { username, password } = req.body;
   User.findByUsername(username, (err, users) => {
     if (err) return res.status(500).send(err);
     if (users.length === 0) return res.status(404).send("User not found");
@@ -33,7 +33,7 @@ exports.login = (req, res) => {
           expiresIn: "1h",
         }
       );
-      res.json({ token });
+      res.json({ token, role: user.role });
     });
   });
 };

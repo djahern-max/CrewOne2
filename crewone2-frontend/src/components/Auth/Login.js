@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode"; // Correct import for named export
 import "../../styles.css";
 import logo from "../../images/logo2.webp";
 
@@ -34,14 +35,24 @@ const Login = () => {
         }
       );
       setMessage("Login successful");
-      // Redirect based on role
-      const userRole = response.data.role; // Ensure your backend sends the user role
-      if (userRole === "office") {
-        navigate("/office-dashboard");
-      } else if (userRole === "driver") {
-        navigate("/driver-dashboard");
-      } else if (userRole === "super") {
-        navigate("/super-dashboard");
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+
+      const decoded = jwtDecode(token); // Correct usage of jwtDecode
+      const role = decoded.role;
+
+      switch (role) {
+        case "Office":
+          navigate("/office-dashboard");
+          break;
+        case "Super":
+          navigate("/super-dashboard");
+          break;
+        case "Driver":
+          navigate("/driver-dashboard");
+          break;
+        default:
+          navigate("/");
       }
     } catch (error) {
       console.error("There was an error logging in!", error);
