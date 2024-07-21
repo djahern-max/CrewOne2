@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../../styles.css";
-import logo from "../../images/logo2.webp";
+import Logo from "../Logo/Logo";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -52,7 +52,7 @@ const Register = () => {
 
   return (
     <div className="container_register">
-      <img src={logo} alt="Logo" className="logo" />
+      <Logo />
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
         <div>

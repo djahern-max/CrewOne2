@@ -8,16 +8,10 @@ body {
 
 .container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  flex-direction: row; /* Changed to row for sidebar and content alignment */
   min-height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
-  text-align: center;
   background-color: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
 }
 
 .container_register,
@@ -124,33 +118,33 @@ a:hover {
 .sidebar {
   background-color: #f8f8f8;
   color: #333333;
-  height: calc(100vh - 60px);
+  height: 100vh;
   width: 200px;
-  position: fixed;
-  top: 60px;
-  left: 0;
-  overflow: hidden;
-  transition: width 0.3s;
+  padding-top: 20px;
 }
 
-.sidebar a {
+.sidebar button {
   display: block;
-  color: #333333;
+  width: 100%;
   padding: 15px;
-  text-decoration: none;
+  background-color: #f8f8f8;
+  color: black;
+  border: none;
+  text-align: left;
+  cursor: pointer;
 }
 
-.sidebar a:hover {
-  background-color: #e0e0e0;
+.sidebar button:hover {
+  background-color: #0056b3;
 }
 
 .content {
-  margin-left: 200px;
-  padding: 20px;
-  transition: margin-left 0.3s;
   flex-grow: 1;
+  padding: 20px;
+  margin-left: 200px;
 }
 
+/* Responsive styles */
 @media (max-width: 768px) {
   .container_register,
   .container_login,
@@ -166,11 +160,7 @@ a:hover {
     top: 0;
   }
 
-  .sidebar a {
-    float: left;
-  }
-
-  .sidebar a {
+  .sidebar button {
     text-align: center;
     float: none;
   }
@@ -201,6 +191,7 @@ label {
 input[type="text"],
 input[type="email"],
 input[type="password"],
+input[type="file"],
 select {
   width: 100%;
   padding: 10px;

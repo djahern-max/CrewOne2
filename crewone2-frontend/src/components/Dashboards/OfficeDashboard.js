@@ -4,6 +4,7 @@ import Sidebar from "../layouts/Sidebar";
 import "../../styles.css";
 
 const OfficeDashboard = () => {
+  const [selectedItem, setSelectedItem] = useState(null);
   const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
@@ -33,15 +34,37 @@ const OfficeDashboard = () => {
     }
   };
 
+  const handleItemClicked = (item) => {
+    setSelectedItem(item);
+  };
+
   return (
     <div className="container">
-      <Sidebar />
+      <Sidebar onItemClicked={handleItemClicked} />
       <div className="content">
-        <h1>Office Dashboard</h1>
-        <form onSubmit={handleSubmit}>
-          <input type="file" onChange={handleFileChange} />
-          <button type="submit">Upload CSV</button>
-        </form>
+        {selectedItem ? (
+          <div>
+            <h2>{selectedItem.name}</h2>
+            {selectedItem.path === "/office-dashboard/upload-csv" && (
+              <form onSubmit={handleSubmit}>
+                <input type="file" onChange={handleFileChange} />
+                <button type="submit">Upload CSV</button>
+              </form>
+            )}
+            {selectedItem.path === "/office-dashboard/item-2" && (
+              <div>
+                <p>This is the content for Item 2.</p>
+              </div>
+            )}
+            {selectedItem.path === "/office-dashboard/item-3" && (
+              <div>
+                <p>This is the content for Item 3.</p>
+              </div>
+            )}
+          </div>
+        ) : (
+          <p>Please select an item from the sidebar.</p>
+        )}
       </div>
     </div>
   );

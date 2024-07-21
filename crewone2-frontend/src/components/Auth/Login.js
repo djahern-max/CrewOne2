@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode"; // Correct import for named export
 import "../../styles.css";
-import logo from "../../images/logo2.webp";
+import Logo from "../Logo/Logo";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -62,7 +62,7 @@ const Login = () => {
 
   return (
     <div className="container_login">
-      <img src={logo} alt="Logo" className="logo" />
+      <Logo />
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>
         <div>
