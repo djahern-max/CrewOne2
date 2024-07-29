@@ -13,7 +13,7 @@ app.use(cors());
 app.use("/api/auth", authRoutes);
 app.use("/api", uploadRoutes);
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3002;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
